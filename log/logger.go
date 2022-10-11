@@ -58,6 +58,26 @@ func NewWithConfig(cfg Config) (*Logger, error) {
 	return logger, nil
 }
 
+// Named adds a new path segment to the logger's name. Segments are joined by
+// periods. By default, Loggers are unnamed.
+func (l *Logger) Named(name string) *Logger {
+	newLogger := l.Logger.Named(name)
+	return &Logger{
+		Logger: newLogger,
+		level:  l.level,
+	}
+}
+
+// With creates a child logger and adds structured context to it. Fields added
+// to the child don't affect the parent, and vice versa.
+func (l *Logger) With(fields ...Field) *Logger {
+	newLogger := l.Logger.With(fields...)
+	return &Logger{
+		Logger: newLogger,
+		level:  l.level,
+	}
+}
+
 // Debug logs a message at DebugLevel. The message includes any fields passed
 // at the log site, as well as any fields accumulated on the logger.
 //
