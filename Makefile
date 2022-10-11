@@ -11,9 +11,9 @@ test: ## run tests
 
 test-coverage: ## run unit tests and create test coverage
 	go test ./... -coverprofile .testCoverage -covermode=atomic -coverpkg=./...
+	go tool cover -func .testCoverage | grep total | awk '{print "Total coverage: "$$3}'
 
 test-coverage-web: test-coverage ## run unit tests and show test coverage in browser
-	go tool cover -func .testCoverage | grep total | awk '{print "Total coverage: "$$3}'
 	go tool cover -html=.testCoverage
 
 install-linters: ## install the linter
