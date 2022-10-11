@@ -50,3 +50,9 @@ func TestSingleError(t *testing.T) {
 	expected := `error1`
 	assert.Equal(t, expected, result.Error())
 }
+
+func TestNoError(t *testing.T) {
+	result := New()
+
+	assert.Equal(t, "", result.Error())
+}
