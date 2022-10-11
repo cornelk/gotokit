@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/hashicorp/go-multierror v1.1.1
+	github.com/joho/godotenv v1.4.0
 	github.com/stretchr/testify v1.8.0
 	go.uber.org/zap v1.23.0
 )
