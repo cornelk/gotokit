@@ -16,7 +16,7 @@ const (
 
 // Load looks for the default .env and .envprivate files in the current directory
 // and the path of the binary. It sets all environment variables from it for the
-// current process.
+// current process. It will overwrite existing environment variables.
 func Load() {
 	LoadFiles(envFileName, envPrivateFileName)
 }
@@ -43,5 +43,5 @@ func loadEnvsFromPath(directoryPath string, files ...string) {
 		paths = append(paths, filePath)
 	}
 
-	_ = godotenv.Load(paths...)
+	_ = godotenv.Overload(paths...)
 }
