@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/georgysavva/scany/v2 v2.0.0-alpha.3
+	github.com/google/go-cmp v0.5.5
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/jackc/pgx/v5 v5.0.2
 	github.com/joho/godotenv v1.4.0

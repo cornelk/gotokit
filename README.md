@@ -5,10 +5,11 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/cornelk/gotokit)](https://goreportcard.com/report/github.com/cornelk/gotokit)
 [![codecov](https://codecov.io/gh/cornelk/gotokit/branch/main/graph/badge.svg?token=NS5UY28V3A)](https://codecov.io/gh/cornelk/gotokit)
 
-### Project layout
+## Project layout
 
     ├─ database         PostgreSQL client and struct scanner
     ├─ env              test/dev/staging/prod environment defines
     ├─ envfile          loads environment variables from env files
+    ├─ jsonutils        additional helpers for JSON processing 
     ├─ log              fast, structured, optimized logging based on zap
     ├─ multierror       provides appendable errors
