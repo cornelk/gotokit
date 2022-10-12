@@ -7,6 +7,7 @@
 
 ## Project layout
 
+    ├─ config           config file reading from environment variables
     ├─ database         PostgreSQL client and struct scanner
     ├─ env              test/dev/staging/prod environment defines
     ├─ envfile          loads environment variables from env files
