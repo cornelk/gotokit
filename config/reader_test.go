@@ -19,7 +19,7 @@ func TestReader(t *testing.T) {
 	t.Setenv("TESTAPP_DATABASE_HOST", "localhost")
 
 	var cfg Config
-	require.NoError(t, Read("TESTAPP", &cfg))
+	require.NoError(t, Read("testapp", &cfg))
 	assert.Equal(t, "localhost", cfg.Database.Host)
 
 	require.Error(t, Read("", cfg)) // not passing a pointer fails

@@ -11,11 +11,11 @@ import (
 
 // Config contains the database configuration.
 type Config struct {
-	Host     string
-	Port     string
-	User     string
-	Password string
-	Database string
+	Host     string `env:"HOST"`
+	Port     string `env:"PORT"`
+	User     string `env:"USER"`
+	Password string `env:"PASSWORD"`
+	Database string `env:"DATABASE"`
 
 	Logger Logger
 }
