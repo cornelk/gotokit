@@ -102,3 +102,8 @@ func (l *Logger) Check(level zapcore.Level, msg string) *zapcore.CheckedEntry {
 
 	return l.Logger.Check(level, msg)
 }
+
+// Level returns the minimum enabled log level.
+func (l *Logger) Level() Level {
+	return l.level.Level()
+}

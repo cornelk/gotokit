@@ -11,6 +11,7 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
 	_ "github.com/jackc/pgx/v5/stdlib" // register as sql driver
+	"github.com/jackc/pgx/v5/tracelog"
 )
 
 // Connection defines a database connection. It exposes the exported functions of both embedded types.
@@ -46,6 +47,12 @@ func New(ctx context.Context, cfg Config) (*Connection, error) {
 	connConfig, err := pgx.ParseConfig(url) // nolint: contextcheck
 	if err != nil {
 		return nil, fmt.Errorf("parsing config: %w", err)
+	}
+	if cfg.Logger != nil {
+		connConfig.Tracer = &tracelog.TraceLog{
+			Logger:   cfg.Logger,
+			LogLevel: cfg.Logger.Level(),
+		}
 	}
 
 	pgxConn, err := pgx.ConnectConfig(ctx, connConfig)

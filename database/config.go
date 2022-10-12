@@ -16,6 +16,8 @@ type Config struct {
 	User     string
 	Password string
 	Database string
+
+	Logger Logger
 }
 
 // Validate checks that all mandatory configuration values are set.
