@@ -24,7 +24,7 @@ func CompareRawJSON(expected, actual []byte) error {
 	}
 
 	if diff := cmp.Diff(expectedMap, actualMap); diff != "" {
-		return fmt.Errorf("remarshal mismatch (-want +got):\n%s", diff)
+		return fmt.Errorf("mismatch (-want +got):\n%s", diff)
 	}
 	return nil
 }
@@ -48,7 +48,7 @@ func ValidateRemarshal(source []byte, object any) error {
 	}
 
 	if diff := cmp.Diff(sourceMap, objectMap); diff != "" {
-		return fmt.Errorf("remarshal mismatch (-want +got):\n%s", diff)
+		return fmt.Errorf("mismatch (-want +got):\n%s", diff)
 	}
 	return nil
 }
