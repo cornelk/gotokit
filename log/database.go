@@ -20,7 +20,7 @@ func NewDatabaseLogger(logger *Logger) *DatabaseLogger {
 }
 
 // Log a message from the database package.
-func (l *DatabaseLogger) Log(_ context.Context, level tracelog.LogLevel, msg string, data map[string]interface{}) {
+func (l *DatabaseLogger) Log(_ context.Context, level tracelog.LogLevel, msg string, data map[string]any) {
 	if level == tracelog.LogLevelNone {
 		return
 	}

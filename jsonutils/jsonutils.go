@@ -13,12 +13,12 @@ import (
 // json.RawMessage as this is an alias for []byte.
 // Any difference will be returned as error.
 func CompareRawJSON(expected, actual []byte) error {
-	var expectedMap map[string]interface{}
+	var expectedMap map[string]any
 	if err := json.Unmarshal(expected, &expectedMap); err != nil {
 		return fmt.Errorf("unmarshalling expected parameter: %w", err)
 	}
 
-	var actualMap map[string]interface{}
+	var actualMap map[string]any
 	if err := json.Unmarshal(actual, &actualMap); err != nil {
 		return fmt.Errorf("unmarshalling actual parameter: %w", err)
 	}
@@ -33,7 +33,7 @@ func CompareRawJSON(expected, actual []byte) error {
 // This allows to detect changes in struct fields that are returned from APIs and not handled in the struct type.
 // Any difference will be returned as error.
 func ValidateRemarshal(source []byte, object any) error {
-	var sourceMap map[string]interface{}
+	var sourceMap map[string]any
 	if err := json.Unmarshal(source, &sourceMap); err != nil {
 		return fmt.Errorf("unmarshalling source: %w", err)
 	}
@@ -42,7 +42,7 @@ func ValidateRemarshal(source []byte, object any) error {
 	if err != nil {
 		return fmt.Errorf("marshalling object: %w", err)
 	}
-	var objectMap map[string]interface{}
+	var objectMap map[string]any
 	if err := json.Unmarshal(b, &objectMap); err != nil {
 		return fmt.Errorf("unmarshalling object: %w", err)
 	}

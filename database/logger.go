@@ -8,6 +8,6 @@ import (
 
 // Logger defines the logger interface used by the database implementation.
 type Logger interface {
-	Log(ctx context.Context, level tracelog.LogLevel, msg string, data map[string]interface{})
+	Log(ctx context.Context, level tracelog.LogLevel, msg string, data map[string]any)
 	Level() tracelog.LogLevel
 }

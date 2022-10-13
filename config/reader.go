@@ -9,7 +9,7 @@ import (
 )
 
 // Read reads the environment variables for the given prefix and unmarshals it into the config object.
-func Read(prefix string, config interface{}) error {
+func Read(prefix string, config any) error {
 	if prefix != "" {
 		if !strings.HasSuffix(prefix, "_") {
 			prefix += "_"

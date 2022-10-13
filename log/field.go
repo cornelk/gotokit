@@ -23,7 +23,7 @@ type ObjectEncoder = zapcore.ObjectEncoder
 // function. If the passed value type does not implement a custom array or
 // object marshaller, reflection will be used for the fields of the type.
 // Using reflection for performance critical code paths should be avoided.
-func Object(key string, val interface{}) Field {
+func Object(key string, val any) Field {
 	switch val := val.(type) {
 	case zapcore.ObjectMarshaler:
 		return zap.Object(key, val)
