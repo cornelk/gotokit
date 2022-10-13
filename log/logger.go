@@ -6,13 +6,10 @@ import (
 
 	"github.com/cornelk/gotokit/env"
 	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
 )
 
 // Logger provides fast, leveled, structured logging. All methods are safe
 // for concurrent use.
-// This logger library wrapper has an optimized handling of Debug() calls
-// for loggers that have debug logging disabled.
 type Logger struct {
 	*zap.Logger
 	level zap.AtomicLevel
@@ -78,32 +75,12 @@ func (l *Logger) With(fields ...Field) *Logger {
 	}
 }
 
-// Debug logs a message at DebugLevel. The message includes any fields passed
-// at the log site, as well as any fields accumulated on the logger.
-//
-// This function optimizes the check for the Debug level of the logger
-// and avoid an unnecessary call to time.Now() as well as an allocation
-// of zapcore.Entry in the case that the debug level is not set.
-func (l *Logger) Debug(msg string, fields ...Field) {
-	if l.level.Level() != DebugLevel {
-		return
-	}
-
-	l.Logger.Debug(msg, fields...)
-}
-
-// Check returns a CheckedEntry if logging a message at the specified level
-// is enabled. It's a completely optional optimization; in high-performance
-// applications, Check can help avoid allocating a slice to hold fields.
-func (l *Logger) Check(level zapcore.Level, msg string) *zapcore.CheckedEntry {
-	if level == zap.DebugLevel && l.level.Level() != DebugLevel {
-		return nil
-	}
-
-	return l.Logger.Check(level, msg)
-}
-
 // Level returns the minimum enabled log level.
 func (l *Logger) Level() Level {
 	return l.level.Level()
+}
+
+// SetLevel alters the logging level.
+func (l *Logger) SetLevel(level Level) {
+	l.level.SetLevel(level)
 }

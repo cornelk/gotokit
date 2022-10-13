@@ -20,7 +20,7 @@ func NewTemporalLogger(logger *Logger) *TemporalLogger {
 
 // Debug logs a message at DebugLevel.
 func (l *TemporalLogger) Debug(msg string, keyValues ...any) {
-	if l.logger.level.Level() > DebugLevel {
+	if l.logger.Level() > DebugLevel {
 		return
 	}
 
@@ -30,7 +30,7 @@ func (l *TemporalLogger) Debug(msg string, keyValues ...any) {
 
 // Info logs a message at InfoLevel.
 func (l *TemporalLogger) Info(msg string, keyValues ...any) {
-	if l.logger.level.Level() > InfoLevel {
+	if l.logger.Level() > InfoLevel {
 		return
 	}
 
@@ -40,7 +40,7 @@ func (l *TemporalLogger) Info(msg string, keyValues ...any) {
 
 // Warn logs a message at WarnLevel.
 func (l *TemporalLogger) Warn(msg string, keyValues ...any) {
-	if l.logger.level.Level() > WarnLevel {
+	if l.logger.Level() > WarnLevel {
 		return
 	}
 
@@ -50,7 +50,7 @@ func (l *TemporalLogger) Warn(msg string, keyValues ...any) {
 
 // Error logs a message at ErrorLevel.
 func (l *TemporalLogger) Error(msg string, keyValues ...any) {
-	if l.logger.level.Level() > ErrorLevel {
+	if l.logger.Level() > ErrorLevel {
 		return
 	}
 

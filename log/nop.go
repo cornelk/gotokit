@@ -8,6 +8,6 @@ func NewNop() *Logger {
 	logger := zap.NewNop()
 	return &Logger{
 		Logger: logger,
-		level:  zap.NewAtomicLevelAt(ErrorLevel),
+		level:  zap.NewAtomicLevelAt(FatalLevel + 1),
 	}
 }
