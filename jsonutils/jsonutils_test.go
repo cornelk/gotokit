@@ -7,6 +7,17 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestCompareRawJSON(t *testing.T) {
+	input1 := []byte(`{ "a": 1, "b": 2 }`)
+	input2 := []byte(`{ "b": 2,   "a": 1 }`)
+	assert.NoError(t, CompareRawJSON(input1, input2))
+
+	input3 := []byte(`{ "a": 1, "b": 2, "c": 3 }`)
+	err := CompareRawJSON(input1, input3)
+	require.Error(t, err)
+	assert.ErrorContains(t, err, "mismatch")
+}
+
 func TestValidateRemarshal(t *testing.T) {
 	type test struct {
 		A int `json:"a"`
