@@ -12,5 +12,5 @@
     ├─ env              test/dev/staging/prod environment defines
     ├─ envfile          loads environment variables from env files
     ├─ jsonutils        additional helpers for JSON processing 
-    ├─ log              fast, structured, optimized logging based on zap
+    ├─ log              fast and structured logging based on zap
     ├─ multierror       provides appendable errors
