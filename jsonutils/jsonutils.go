@@ -32,7 +32,7 @@ func CompareRawJSON(expected, actual []byte) error {
 // ValidateRemarshal verifies that the json source and the given object match when being marshalled.
 // This allows to detect changes in struct fields that are returned from APIs and not handled in the struct type.
 // Any difference will be returned as error.
-func ValidateRemarshal(source []byte, object any) error {
+func ValidateRemarshal(source []byte, object any, options ...cmp.Option) error {
 	var sourceMap map[string]any
 	if err := json.Unmarshal(source, &sourceMap); err != nil {
 		return fmt.Errorf("unmarshalling source: %w", err)
@@ -47,7 +47,7 @@ func ValidateRemarshal(source []byte, object any) error {
 		return fmt.Errorf("unmarshalling object: %w", err)
 	}
 
-	if diff := cmp.Diff(sourceMap, objectMap); diff != "" {
+	if diff := cmp.Diff(sourceMap, objectMap, options...); diff != "" {
 		return fmt.Errorf("mismatch (-want +got):\n%s", diff)
 	}
 	return nil
