@@ -9,6 +9,10 @@ import (
 )
 
 // Read reads the environment variables for the given prefix and unmarshals it into the config object.
+// To support both prefixed and non prefixed envs at the same time it is recommended to call the function
+// first without prefix and a second time with the prefix set. Only environment variables that exist will
+// set a field in the config. This way, an environment variable set without a prefix can be overwritten
+// by an environment variable with a prefix.
 func Read(prefix string, config any) error {
 	if prefix != "" {
 		if !strings.HasSuffix(prefix, "_") {
