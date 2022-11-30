@@ -8,5 +8,5 @@ import (
 
 func TestNewTestLogger(t *testing.T) {
 	logger := NewTestLogger(t)
-	assert.True(t, logger.Core().Enabled(DebugLevel))
+	assert.Equal(t, DebugLevel, logger.level.Level())
 }

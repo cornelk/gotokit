@@ -3,7 +3,7 @@ package log
 import (
 	"fmt"
 
-	"go.uber.org/zap"
+	"golang.org/x/exp/slog"
 )
 
 // TemporalLogger implements a logger compatible with the temporal package.
@@ -25,7 +25,7 @@ func (l *TemporalLogger) Debug(msg string, keyValues ...any) {
 	}
 
 	fields := keyValuesToFields(keyValues...)
-	l.logger.Debug(msg, fields...)
+	l.logger.LogDepth(1, DebugLevel, msg, fields...)
 }
 
 // Info logs a message at InfoLevel.
@@ -35,7 +35,7 @@ func (l *TemporalLogger) Info(msg string, keyValues ...any) {
 	}
 
 	fields := keyValuesToFields(keyValues...)
-	l.logger.Info(msg, fields...)
+	l.logger.LogDepth(1, InfoLevel, msg, fields...)
 }
 
 // Warn logs a message at WarnLevel.
@@ -45,7 +45,7 @@ func (l *TemporalLogger) Warn(msg string, keyValues ...any) {
 	}
 
 	fields := keyValuesToFields(keyValues...)
-	l.logger.Warn(msg, fields...)
+	l.logger.LogDepth(1, WarnLevel, msg, fields...)
 }
 
 // Error logs a message at ErrorLevel.
@@ -55,12 +55,12 @@ func (l *TemporalLogger) Error(msg string, keyValues ...any) {
 	}
 
 	fields := keyValuesToFields(keyValues...)
-	l.logger.Error(msg, fields...)
+	l.logger.LogDepth(1, ErrorLevel, msg, fields...)
 }
 
-func keyValuesToFields(keyValues ...any) []Field {
+func keyValuesToFields(keyValues ...any) []any {
 	l := len(keyValues)
-	fields := make([]Field, 0, (len(keyValues)/2)+1)
+	fields := make([]any, 0, (len(keyValues)/2)+1)
 
 	for i := 0; i < l; i++ {
 		k := keyValues[i]
@@ -76,9 +76,9 @@ func keyValuesToFields(keyValues ...any) []Field {
 		var field Field
 		if i < l {
 			v := keyValues[i]
-			field = zap.Any(key, v)
+			field = slog.Any(key, v)
 		} else {
-			field = zap.String(key, "")
+			field = slog.String(key, "")
 		}
 
 		fields = append(fields, field)

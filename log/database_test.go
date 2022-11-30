@@ -1,23 +1,27 @@
 package log
 
 import (
+	"bytes"
 	"context"
+	"strings"
 	"testing"
 
+	"github.com/cornelk/gotokit/env"
 	"github.com/jackc/pgx/v5/tracelog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"go.uber.org/zap"
-	"go.uber.org/zap/zaptest/observer"
 )
 
 func TestDatabaseLogger(t *testing.T) {
-	logger, err := New()
+	cfg, err := ConfigForEnv(env.Development)
 	require.NoError(t, err)
-	logger.SetLevel(DebugLevel)
 
-	core, observed := observer.New(logger.Level())
-	logger.Logger = zap.New(core)
+	var buf bytes.Buffer
+	cfg.Output = &buf
+	cfg.Level = DebugLevel
+
+	logger, err := NewWithConfig(cfg)
+	require.NoError(t, err)
 
 	ctx := context.Background()
 	dbLogger := NewDatabaseLogger(logger)
@@ -28,6 +32,7 @@ func TestDatabaseLogger(t *testing.T) {
 	dbLogger.Log(ctx, tracelog.LogLevelWarn, "test3", nil)
 	dbLogger.Log(ctx, tracelog.LogLevelError, "test4", nil)
 
-	all := observed.TakeAll()
-	assert.Len(t, all, 4)
+	s := buf.String()
+	all := strings.Split(s, "\n")
+	assert.Len(t, all, 5)
 }

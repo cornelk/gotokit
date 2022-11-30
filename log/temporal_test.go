@@ -1,21 +1,25 @@
 package log
 
 import (
+	"bytes"
+	"strings"
 	"testing"
 
+	"github.com/cornelk/gotokit/env"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"go.uber.org/zap"
-	"go.uber.org/zap/zaptest/observer"
 )
 
 func TestTemporalLogger(t *testing.T) {
-	logger, err := New()
+	cfg, err := ConfigForEnv(env.Development)
 	require.NoError(t, err)
-	logger.SetLevel(DebugLevel)
 
-	core, observed := observer.New(logger.Level())
-	logger.Logger = zap.New(core)
+	var buf bytes.Buffer
+	cfg.Output = &buf
+	cfg.Level = DebugLevel
+
+	logger, err := NewWithConfig(cfg)
+	require.NoError(t, err)
 
 	temporalLogger := NewTemporalLogger(logger)
 
@@ -24,8 +28,9 @@ func TestTemporalLogger(t *testing.T) {
 	temporalLogger.Warn("test1")
 	temporalLogger.Error("test1")
 
-	all := observed.TakeAll()
-	assert.Len(t, all, 4)
+	s := buf.String()
+	all := strings.Split(s, "\n")
+	assert.Len(t, all, 5)
 }
 
 func TestKeyValuesToFields(t *testing.T) {

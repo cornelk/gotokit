@@ -23,7 +23,7 @@ func (l *ExtendedLogger) Debugf(format string, v ...interface{}) {
 	}
 
 	msg := fmt.Sprintf(format, v...)
-	l.logger.Debug(msg)
+	l.logger.LogDepth(1, DebugLevel, msg)
 }
 
 // Warnf logs a message at WarnLevel.
@@ -33,7 +33,7 @@ func (l *ExtendedLogger) Warnf(format string, v ...interface{}) {
 	}
 
 	msg := fmt.Sprintf(format, v...)
-	l.logger.Warn(msg)
+	l.logger.LogDepth(1, WarnLevel, msg)
 }
 
 // Errorf logs a message at ErrorLevel.
@@ -43,5 +43,5 @@ func (l *ExtendedLogger) Errorf(format string, v ...interface{}) {
 	}
 
 	msg := fmt.Sprintf(format, v...)
-	l.logger.Error(msg)
+	l.logger.LogDepth(1, ErrorLevel, msg)
 }
