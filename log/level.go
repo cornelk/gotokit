@@ -3,35 +3,34 @@ package log
 import (
 	"sync/atomic"
 
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
+	"golang.org/x/exp/slog"
 )
 
 // Log levels.
 const (
 	// DebugLevel logs are typically voluminous, and are usually disabled in
 	// production.
-	DebugLevel = zap.DebugLevel
+	DebugLevel = slog.DebugLevel
 
 	// InfoLevel is the default logging priority.
-	InfoLevel = zap.InfoLevel
+	InfoLevel = slog.InfoLevel
 
 	// WarnLevel logs are more important than Info, but don't need individual
 	// human review.
-	WarnLevel = zap.WarnLevel
+	WarnLevel = slog.WarnLevel
 
 	// ErrorLevel logs are high-priority. If an application is running smoothly,
 	// it shouldn't generate any error-level logs.
-	ErrorLevel = zap.ErrorLevel
+	ErrorLevel = slog.ErrorLevel
 
 	// FatalLevel logs a message, then calls os.Exit(1).
-	FatalLevel = zap.FatalLevel
+	FatalLevel = slog.ErrorLevel + 1
 )
 
 // Level is a logging priority. Higher levels are more important.
-type Level = zapcore.Level
+type Level = slog.Level
 
-var defaultLevel = uintptr(zap.InfoLevel)
+var defaultLevel = uintptr(slog.InfoLevel)
 
 // DefaultLevel returns the current default level for all loggers
 // newly created with New().

@@ -2,6 +2,7 @@ package log
 
 import (
 	"io"
+	"os"
 )
 
 type writer struct {
@@ -22,16 +23,17 @@ func NewWriter(logger *Logger, level Level) io.Writer {
 func (o writer) Write(p []byte) (int, error) {
 	switch o.level {
 	case DebugLevel:
-		o.Logger.Debug(string(p))
+		o.Logger.LogDepth(1, DebugLevel, string(p))
 
 	case InfoLevel:
-		o.Logger.Info(string(p))
+		o.Logger.LogDepth(1, InfoLevel, string(p))
 
 	case ErrorLevel:
-		o.Logger.Error(string(p))
+		o.Logger.LogDepth(1, ErrorLevel, string(p))
 
 	case FatalLevel:
-		o.Logger.Fatal(string(p))
+		o.Logger.LogDepth(1, ErrorLevel, string(p))
+		os.Exit(1)
 	}
 
 	return len(p), nil

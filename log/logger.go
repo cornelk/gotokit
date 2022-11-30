@@ -3,16 +3,18 @@ package log
 
 import (
 	"fmt"
+	"io"
+	"os"
 
 	"github.com/cornelk/gotokit/env"
-	"go.uber.org/zap"
+	"golang.org/x/exp/slog"
 )
 
 // Logger provides fast, leveled, structured logging. All methods are safe
 // for concurrent use.
 type Logger struct {
-	*zap.Logger
-	level zap.AtomicLevel
+	*slog.Logger
+	level *slog.LevelVar
 }
 
 // New returns a new Logger instance.
@@ -38,19 +40,35 @@ func New() (*Logger, error) {
 // If no level is set in the config, it will use the default level of
 // this package.
 func NewWithConfig(cfg Config) (*Logger, error) {
-	if cfg.Level == (zap.AtomicLevel{}) {
-		level := DefaultLevel()
-		cfg.Level = zap.NewAtomicLevelAt(level)
+	level := &slog.LevelVar{}
+	level.Set(cfg.Level)
+
+	opts := slog.HandlerOptions{
+		AddSource: cfg.CallerInfo,
+		Level:     level,
 	}
 
-	l, err := cfg.Build()
-	if err != nil {
-		return nil, fmt.Errorf("building logger: %w", err)
+	var output io.Writer
+	if cfg.Output == nil {
+		output = os.Stdout
+	} else {
+		output = cfg.Output
 	}
+
+	handler := cfg.Handler
+	if handler == nil {
+		if cfg.JSONOutput {
+			handler = opts.NewJSONHandler(output)
+		} else {
+			handler = opts.NewTextHandler(output)
+		}
+	}
+
+	l := slog.New(handler)
 
 	logger := &Logger{
 		Logger: l,
-		level:  cfg.Level,
+		level:  level,
 	}
 	return logger, nil
 }
@@ -58,7 +76,7 @@ func NewWithConfig(cfg Config) (*Logger, error) {
 // Named adds a new path segment to the logger's name. Segments are joined by
 // periods. By default, Loggers are unnamed.
 func (l *Logger) Named(name string) *Logger {
-	newLogger := l.Logger.Named(name)
+	newLogger := l.Logger.WithGroup(name)
 	return &Logger{
 		Logger: newLogger,
 		level:  l.level,
@@ -67,7 +85,7 @@ func (l *Logger) Named(name string) *Logger {
 
 // With creates a child logger and adds structured context to it. Fields added
 // to the child don't affect the parent, and vice versa.
-func (l *Logger) With(fields ...Field) *Logger {
+func (l *Logger) With(fields ...any) *Logger {
 	newLogger := l.Logger.With(fields...)
 	return &Logger{
 		Logger: newLogger,
@@ -82,5 +100,11 @@ func (l *Logger) Level() Level {
 
 // SetLevel alters the logging level.
 func (l *Logger) SetLevel(level Level) {
-	l.level.SetLevel(level)
+	l.level.Set(level)
+}
+
+// Fatal logs at FatalLevel.
+func (l *Logger) Fatal(msg string, args ...any) {
+	l.LogDepth(1, ErrorLevel, msg, args...)
+	os.Exit(1)
 }

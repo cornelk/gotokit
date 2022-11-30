@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/jackc/pgx/v5/tracelog"
-	"go.uber.org/zap"
+	"golang.org/x/exp/slog"
 )
 
 // DatabaseLogger implements a logger compatible with the database package.
@@ -25,23 +25,23 @@ func (l *DatabaseLogger) Log(_ context.Context, level tracelog.LogLevel, msg str
 		return
 	}
 
-	fields := make([]Field, 0, len(data))
+	fields := make([]any, 0, len(data))
 	for k, v := range data {
-		fields = append(fields, zap.Any(k, v))
+		fields = append(fields, slog.Any(k, v))
 	}
 
 	switch level {
 	case tracelog.LogLevelTrace, tracelog.LogLevelDebug:
-		l.logger.Debug(msg, fields...)
+		l.logger.LogDepth(1, DebugLevel, msg, fields...)
 
 	case tracelog.LogLevelInfo:
-		l.logger.Info(msg, fields...)
+		l.logger.LogDepth(1, InfoLevel, msg, fields...)
 
 	case tracelog.LogLevelWarn:
-		l.logger.Warn(msg, fields...)
+		l.logger.LogDepth(1, WarnLevel, msg, fields...)
 
 	case tracelog.LogLevelError:
-		l.logger.Error(msg, fields...)
+		l.logger.LogDepth(1, ErrorLevel, msg, fields...)
 	}
 }
 

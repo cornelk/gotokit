@@ -16,10 +16,14 @@ func TestNew(t *testing.T) {
 	logger, err := New()
 	require.NoError(t, err)
 
-	assert.True(t, logger.Core().Enabled(DebugLevel))
+	assert.True(t, logger.Enabled(DebugLevel))
 }
 
 func TestNewWithConfig(t *testing.T) {
+	prev := DefaultLevel()
+	SetDefaultLevel(DebugLevel)
+	defer SetDefaultLevel(prev)
+
 	cfg, err := ConfigForEnv(env.Development)
 	require.NoError(t, err)
 
