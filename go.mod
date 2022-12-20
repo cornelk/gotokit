@@ -7,11 +7,11 @@ require (
 	github.com/georgysavva/scany/v2 v2.0.0
 	github.com/google/go-cmp v0.5.9
 	github.com/hashicorp/go-multierror v1.1.1
-	github.com/jackc/pgx/v5 v5.1.1
+	github.com/jackc/pgx/v5 v5.2.0
 	github.com/joho/godotenv v1.4.0
 	github.com/rubenv/sql-migrate v1.2.0
 	github.com/stretchr/testify v1.8.1
-	golang.org/x/exp v0.0.0-20221126150942-6ab00d035af9
+	golang.org/x/exp v0.0.0-20221217163422-3c43f8badb15
 	modernc.org/sqlite v1.20.0
 )
 
