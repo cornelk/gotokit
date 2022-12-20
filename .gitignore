@@ -1,14 +1,17 @@
-*.exe
+# IDE settings
+.fleet
 .idea
 .vscode
+
+# binary and temp files
+*.exe
 *.iml
 *.local
-/*.log
+*.log
 *.out
 *.prof
 *.test
 .DS_Store
 *.dmp
 *.db
-
 .testCoverage
