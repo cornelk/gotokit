@@ -60,7 +60,14 @@ func NewWithConfig(cfg Config) (*Logger, error) {
 		if cfg.JSONOutput {
 			handler = opts.NewJSONHandler(output)
 		} else {
-			handler = opts.NewTextHandler(output)
+			opts := ConsoleHandlerOptions{
+				SlogOptions: slog.HandlerOptions{
+					AddSource: cfg.CallerInfo,
+					Level:     level,
+				},
+				TimeFormat: "2006-01-02 15:04:05",
+			}
+			handler = opts.NewConsoleHandler(output)
 		}
 	}
 
