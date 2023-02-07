@@ -2,6 +2,8 @@ package log
 
 import (
 	"bytes"
+	"context"
+	"fmt"
 
 	"github.com/stretchr/testify/require"
 	"golang.org/x/exp/slog"
@@ -31,7 +33,6 @@ func NewTestLogger(t TestingT) *Logger {
 
 	handler := newTestHandler(t)
 	cfg := Config{
-		JSONOutput: false,
 		CallerInfo: true,
 		Level:      DebugLevel,
 		Handler:    handler,
@@ -58,8 +59,8 @@ func newTestHandler(t TestingT) *testHandler {
 
 // Enabled reports whether the handler handles records at the given level.
 // The handler ignores records whose level is lower.
-func (t testHandler) Enabled(level slog.Level) bool {
-	return t.handler.Enabled(level)
+func (t testHandler) Enabled(ctx context.Context, level slog.Level) bool {
+	return t.handler.Enabled(ctx, level)
 }
 
 // Handle handles the Record.
@@ -68,17 +69,22 @@ func (t testHandler) Handle(r slog.Record) error {
 	if r.Level >= ErrorLevel {
 		t.t.FailNow()
 	}
-	return err
+	if err != nil {
+		return fmt.Errorf("handling record: %w", err)
+	}
+	return nil
 }
 
 // WithAttrs returns a new Handler whose attributes consist of
 // both the receiver's attributes and the arguments.
+// nolint: ireturn
 func (t testHandler) WithAttrs(attrs []slog.Attr) slog.Handler {
 	return t.handler.WithAttrs(attrs)
 }
 
 // WithGroup returns a new Handler with the given group appended to
 // the receiver's existing groups.
+// nolint: ireturn
 func (t testHandler) WithGroup(name string) slog.Handler {
 	return t.handler.WithGroup(name)
 }
