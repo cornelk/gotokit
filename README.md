@@ -7,6 +7,7 @@
 
 ## Project layout
 
+    ├─ app              common application/service helpers
     ├─ config           config file reading from environment variables
     ├─ database         PostgreSQL client and struct scanner
     ├─ env              test/dev/staging/prod environment defines
