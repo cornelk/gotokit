@@ -1,6 +1,7 @@
 package log
 
 import (
+	"context"
 	"testing"
 
 	"github.com/cornelk/gotokit/env"
@@ -16,7 +17,7 @@ func TestNew(t *testing.T) {
 	logger, err := New()
 	require.NoError(t, err)
 
-	assert.True(t, logger.Enabled(DebugLevel))
+	assert.True(t, logger.Enabled(context.TODO(), DebugLevel))
 }
 
 func TestNewWithConfig(t *testing.T) {

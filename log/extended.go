@@ -1,6 +1,7 @@
 package log
 
 import (
+	"context"
 	"fmt"
 )
 
@@ -23,7 +24,7 @@ func (l *ExtendedLogger) Debugf(format string, v ...interface{}) {
 	}
 
 	msg := fmt.Sprintf(format, v...)
-	l.logger.LogDepth(1, DebugLevel, msg)
+	l.logger.Log(context.TODO(), DebugLevel, msg)
 }
 
 // Warnf logs a message at WarnLevel.
@@ -33,7 +34,7 @@ func (l *ExtendedLogger) Warnf(format string, v ...interface{}) {
 	}
 
 	msg := fmt.Sprintf(format, v...)
-	l.logger.LogDepth(1, WarnLevel, msg)
+	l.logger.Log(context.TODO(), WarnLevel, msg)
 }
 
 // Errorf logs a message at ErrorLevel.
@@ -43,5 +44,5 @@ func (l *ExtendedLogger) Errorf(format string, v ...interface{}) {
 	}
 
 	msg := fmt.Sprintf(format, v...)
-	l.logger.LogDepth(1, ErrorLevel, msg)
+	l.logger.Log(context.TODO(), ErrorLevel, msg)
 }

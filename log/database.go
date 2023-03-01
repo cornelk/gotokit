@@ -20,7 +20,7 @@ func NewDatabaseLogger(logger *Logger) *DatabaseLogger {
 }
 
 // Log a message from the database package.
-func (l *DatabaseLogger) Log(_ context.Context, level tracelog.LogLevel, msg string, data map[string]any) {
+func (l *DatabaseLogger) Log(ctx context.Context, level tracelog.LogLevel, msg string, data map[string]any) {
 	if level == tracelog.LogLevelNone {
 		return
 	}
@@ -32,16 +32,16 @@ func (l *DatabaseLogger) Log(_ context.Context, level tracelog.LogLevel, msg str
 
 	switch level {
 	case tracelog.LogLevelTrace, tracelog.LogLevelDebug:
-		l.logger.LogDepth(1, DebugLevel, msg, fields...)
+		l.logger.Log(ctx, DebugLevel, msg, fields...)
 
 	case tracelog.LogLevelInfo:
-		l.logger.LogDepth(1, InfoLevel, msg, fields...)
+		l.logger.Log(ctx, InfoLevel, msg, fields...)
 
 	case tracelog.LogLevelWarn:
-		l.logger.LogDepth(1, WarnLevel, msg, fields...)
+		l.logger.Log(ctx, WarnLevel, msg, fields...)
 
 	case tracelog.LogLevelError:
-		l.logger.LogDepth(1, ErrorLevel, msg, fields...)
+		l.logger.Log(ctx, ErrorLevel, msg, fields...)
 	}
 }
 

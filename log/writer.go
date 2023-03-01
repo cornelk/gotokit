@@ -1,6 +1,7 @@
 package log
 
 import (
+	"context"
 	"io"
 	"os"
 )
@@ -23,16 +24,16 @@ func NewWriter(logger *Logger, level Level) io.Writer {
 func (o writer) Write(p []byte) (int, error) {
 	switch o.level {
 	case DebugLevel:
-		o.Logger.LogDepth(1, DebugLevel, string(p))
+		o.Logger.Log(context.TODO(), DebugLevel, string(p))
 
 	case InfoLevel:
-		o.Logger.LogDepth(1, InfoLevel, string(p))
+		o.Logger.Log(context.TODO(), InfoLevel, string(p))
 
 	case ErrorLevel:
-		o.Logger.LogDepth(1, ErrorLevel, string(p))
+		o.Logger.Log(context.TODO(), ErrorLevel, string(p))
 
 	case FatalLevel:
-		o.Logger.LogDepth(1, ErrorLevel, string(p))
+		o.Logger.Log(context.TODO(), ErrorLevel, string(p))
 		os.Exit(1)
 	}
 
