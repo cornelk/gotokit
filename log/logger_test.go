@@ -1,7 +1,9 @@
 package log
 
 import (
+	"bytes"
 	"context"
+	"errors"
 	"testing"
 
 	"github.com/cornelk/gotokit/env"
@@ -27,9 +29,58 @@ func TestNewWithConfig(t *testing.T) {
 
 	cfg, err := ConfigForEnv(env.Development)
 	require.NoError(t, err)
+	cfg.JSONOutput = false
 
 	logger, err := NewWithConfig(cfg)
 	require.NoError(t, err)
 	named := logger.Named("test")
 	assert.Equal(t, DebugLevel, named.level.Level())
+}
+
+func TestLoggerFatal(t *testing.T) {
+	cfg, err := ConfigForEnv(env.Development)
+	require.NoError(t, err)
+	var buf bytes.Buffer
+
+	cfg.CallerInfo = false
+	cfg.JSONOutput = false
+	cfg.Output = &buf
+	cfg.TimeFormat = "-"
+
+	logger, err := NewWithConfig(cfg)
+	require.NoError(t, err)
+	exited := false
+	fatalExitFunc = func() {
+		exited = true
+	}
+
+	logger.Fatal("something bad happened", Err(errors.New("network error")))
+
+	assert.True(t, exited)
+	output := buf.String()
+	assert.Equal(t, "FATAL   something bad happened {\"error\":\"network error\"}\n", output)
+}
+
+func TestLoggerTrace(t *testing.T) {
+	cfg, err := ConfigForEnv(env.Development)
+	require.NoError(t, err)
+	var buf bytes.Buffer
+
+	cfg.CallerInfo = false
+	cfg.Level = TraceLevel
+	cfg.Output = &buf
+	cfg.TimeFormat = "-"
+
+	logger, err := NewWithConfig(cfg)
+	require.NoError(t, err)
+	exited := false
+	fatalExitFunc = func() {
+		exited = true
+	}
+
+	logger.Trace("something happened")
+
+	assert.False(t, exited)
+	output := buf.String()
+	assert.Equal(t, "TRACE   something happened\n", output)
 }

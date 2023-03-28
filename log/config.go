@@ -8,6 +8,8 @@ import (
 	"golang.org/x/exp/slog"
 )
 
+var defaultTimeFormat = "2006-01-02 15:04:05"
+
 // Config represents configuration for a logger.
 type Config struct {
 	JSONOutput bool
@@ -22,6 +24,10 @@ type Config struct {
 
 	// Handler handles log records produced by a Logger..
 	Handler slog.Handler
+
+	// TimeFormat defines the time format to use, defaults to "2006-01-02 15:04:05"
+	// Outputting of time can be disabled with - for the console handler.
+	TimeFormat string
 }
 
 // ConfigForEnv returns the default config for the given environment.
@@ -29,7 +35,8 @@ type Config struct {
 // custom config using the NewWithConfig() function.
 func ConfigForEnv(environment env.Environment) (Config, error) {
 	cfg := Config{
-		Level: DefaultLevel(),
+		Level:      DefaultLevel(),
+		TimeFormat: defaultTimeFormat,
 	}
 
 	switch environment {
