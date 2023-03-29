@@ -8,6 +8,7 @@
 ## Project layout
 
     ├─ app              common application/service helpers
+    ├─ buildinfo        show version info that is embedded in the binary
     ├─ config           config file reading from environment variables
     ├─ database         PostgreSQL client and struct scanner
     ├─ env              test/dev/staging/prod environment defines
