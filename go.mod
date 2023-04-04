@@ -1,12 +1,11 @@
 module github.com/cornelk/gotokit
 
-go 1.19
+go 1.20
 
 require (
 	github.com/caarlos0/env/v6 v6.10.1
 	github.com/georgysavva/scany/v2 v2.0.0
 	github.com/google/go-cmp v0.5.9
-	github.com/hashicorp/go-multierror v1.1.1
 	github.com/jackc/pgx/v5 v5.3.1
 	github.com/joho/godotenv v1.5.1
 	github.com/rubenv/sql-migrate v1.4.0
@@ -20,7 +19,6 @@ require (
 	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/go-gorp/gorp/v3 v3.1.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
-	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
 	github.com/jackc/puddle/v2 v2.2.0 // indirect
