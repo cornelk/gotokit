@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/caarlos0/env/v6"
+	"github.com/caarlos0/env/v8"
 )
 
 // Read reads the environment variables for the given prefix and unmarshals it into the config object.
@@ -23,7 +23,7 @@ func Read(config any, prefixes ...string) error {
 		}
 
 		opts := env.Options{Prefix: prefix}
-		if err := env.Parse(config, opts); err != nil {
+		if err := env.ParseWithOptions(config, opts); err != nil {
 			return fmt.Errorf("reading config from env: %w", err)
 		}
 	}
