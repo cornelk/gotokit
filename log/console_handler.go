@@ -107,10 +107,12 @@ func (h *ConsoleHandler) Handle(ctx context.Context, r slog.Record) error {
 	buf.WriteString(r.Message)
 
 	hasEntries := false
-	r.Attrs(func(a slog.Attr) {
+	r.Attrs(func(a slog.Attr) bool {
 		if a.Key != "" {
 			hasEntries = true
+			return false
 		}
+		return true
 	})
 	if hasEntries {
 		buf.WriteRune(' ')
