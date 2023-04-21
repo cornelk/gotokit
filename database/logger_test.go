@@ -1,4 +1,4 @@
-package log
+package database
 
 import (
 	"bytes"
@@ -7,24 +7,25 @@ import (
 	"testing"
 
 	"github.com/cornelk/gotokit/env"
+	"github.com/cornelk/gotokit/log"
 	"github.com/jackc/pgx/v5/tracelog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 func TestDatabaseLogger(t *testing.T) {
-	cfg, err := ConfigForEnv(env.Development)
+	cfg, err := log.ConfigForEnv(env.Development)
 	require.NoError(t, err)
 
 	var buf bytes.Buffer
 	cfg.Output = &buf
-	cfg.Level = DebugLevel
+	cfg.Level = log.DebugLevel
 
-	logger, err := NewWithConfig(cfg)
+	logger, err := log.NewWithConfig(cfg)
 	require.NoError(t, err)
 
 	ctx := context.Background()
-	dbLogger := NewDatabaseLogger(logger)
+	dbLogger := NewLogger(logger)
 	assert.Equal(t, tracelog.LogLevelDebug, dbLogger.Level())
 
 	dbLogger.Log(ctx, tracelog.LogLevelTrace, "test1", nil)

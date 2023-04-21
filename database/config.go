@@ -1,11 +1,20 @@
 package database
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"math"
 	"strconv"
+
+	"github.com/jackc/pgx/v5/tracelog"
 )
+
+// LoggerContract defines the logger interface used by the database implementation.
+type LoggerContract interface {
+	Log(ctx context.Context, level tracelog.LogLevel, msg string, data map[string]any)
+	Level() tracelog.LogLevel
+}
 
 // Config contains the database configuration.
 type Config struct {
@@ -15,7 +24,7 @@ type Config struct {
 	Password string `env:"PASSWORD"`
 	Database string `env:"DATABASE"`
 
-	Logger Logger
+	Logger LoggerContract
 }
 
 // Validate checks that all mandatory configuration values are set.
