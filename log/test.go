@@ -53,7 +53,7 @@ func newTestHandler(t TestingT) *testHandler {
 	}
 	return &testHandler{
 		t:       t,
-		handler: slog.NewTextHandler(writer),
+		handler: slog.NewTextHandler(writer, nil),
 	}
 }
 

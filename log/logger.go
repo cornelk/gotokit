@@ -44,7 +44,7 @@ func NewWithConfig(cfg Config) (*Logger, error) {
 	level := &slog.LevelVar{}
 	level.Set(cfg.Level)
 
-	opts := slog.HandlerOptions{
+	opts := &slog.HandlerOptions{
 		AddSource: cfg.CallerInfo,
 		Level:     level,
 	}
@@ -59,17 +59,17 @@ func NewWithConfig(cfg Config) (*Logger, error) {
 	handler := cfg.Handler
 	if handler == nil {
 		if cfg.JSONOutput {
-			handler = opts.NewJSONHandler(output)
+			handler = slog.NewJSONHandler(output, opts)
 		} else {
 			opts.ReplaceAttr = replaceLevelName
-			consoleOpts := ConsoleHandlerOptions{
+			consoleOpts := &ConsoleHandlerOptions{
 				SlogOptions: opts,
 				TimeFormat:  cfg.TimeFormat,
 			}
 			if cfg.TimeFormat == "" {
 				consoleOpts.TimeFormat = defaultTimeFormat
 			}
-			handler = consoleOpts.NewConsoleHandler(output)
+			handler = NewConsoleHandler(output, consoleOpts)
 		}
 	}
 
