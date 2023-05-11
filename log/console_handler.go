@@ -13,6 +13,8 @@ import (
 	"golang.org/x/exp/slog"
 )
 
+var _ slog.Handler = &ConsoleHandler{}
+
 // consoleLevelString translates a level to a padded string ready for printing on the console.
 var consoleLevelString = map[Level]string{
 	TraceLevel: "TRACE   ",

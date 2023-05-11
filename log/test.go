@@ -42,6 +42,8 @@ func NewTestLogger(t TestingT) *Logger {
 	return l
 }
 
+var _ slog.Handler = &testHandler{}
+
 type testHandler struct {
 	handler slog.Handler
 	t       TestingT
