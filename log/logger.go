@@ -61,13 +61,13 @@ func NewWithConfig(cfg Config) (*Logger, error) {
 		if cfg.JSONOutput {
 			handler = slog.NewJSONHandler(output, opts)
 		} else {
-			opts.ReplaceAttr = replaceLevelName
+			opts.ReplaceAttr = ReplaceLevelName
 			consoleOpts := &ConsoleHandlerOptions{
 				SlogOptions: opts,
 				TimeFormat:  cfg.TimeFormat,
 			}
 			if cfg.TimeFormat == "" {
-				consoleOpts.TimeFormat = defaultTimeFormat
+				consoleOpts.TimeFormat = DefaultTimeFormat
 			}
 			handler = NewConsoleHandler(output, consoleOpts)
 		}
