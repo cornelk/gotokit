@@ -11,6 +11,7 @@ type Environment string
 
 // Available environments.
 const (
+	Local       Environment = "local"
 	Test        Environment = "test"
 	Development Environment = "dev"
 	Qa          Environment = "qa"
@@ -21,6 +22,9 @@ const (
 // Parse returns an environment constant from a given string representation of it.
 func Parse(envName string) (Environment, error) {
 	switch Environment(strings.ToLower(envName)) {
+	case Local:
+		return Local, nil
+
 	case Test:
 		return Test, nil
 
