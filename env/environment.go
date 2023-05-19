@@ -9,7 +9,7 @@ import (
 // Environment defines a runtime environment.
 type Environment string
 
-// Available environments.
+// Available commonly used environments.
 const (
 	Local       Environment = "local"
 	Test        Environment = "test"
@@ -43,4 +43,10 @@ func Parse(envName string) (Environment, error) {
 	default:
 		return "", fmt.Errorf("unknown environment '%s'", envName)
 	}
+}
+
+// Validate checks that the environment value is valid.
+func (env Environment) Validate() error {
+	_, err := Parse(string(env))
+	return err
 }

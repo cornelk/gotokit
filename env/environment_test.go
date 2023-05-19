@@ -15,3 +15,8 @@ func TestParse(t *testing.T) {
 	_, err = Parse("invalid")
 	require.Error(t, err)
 }
+
+func TestValidate(t *testing.T) {
+	env := Environment("invalid")
+	require.Error(t, env.Validate())
+}
