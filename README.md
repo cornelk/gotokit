@@ -15,3 +15,4 @@
     ├─ envfile          loads environment variables from env files
     ├─ jsonutils        additional helpers for JSON processing 
     ├─ log              fast and structured logging based on slog
+    ├─ pointer          create a pointer to a value
