@@ -5,6 +5,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
@@ -22,6 +23,8 @@ func Load() {
 }
 
 // LoadFiles loads the given files instead of the default ones.
+// If the file name contains no path, the current and executable directories will be
+// searched for the file.
 func LoadFiles(files ...string) {
 	currentDirectory, err := os.Getwd()
 	if err == nil {
@@ -38,8 +41,15 @@ func LoadFiles(files ...string) {
 func loadEnvsFromPath(directoryPath string, files ...string) {
 	paths := make([]string, 0, len(files))
 
-	for _, file := range files {
-		filePath := path.Join(directoryPath, file)
+	for _, fileName := range files {
+		var filePath string
+		// if the file name contains a path skip prepending path
+		if strings.ContainsAny(fileName, "/\\") {
+			filePath = fileName
+		} else {
+			filePath = path.Join(directoryPath, fileName)
+		}
+
 		paths = append(paths, filePath)
 	}
 
