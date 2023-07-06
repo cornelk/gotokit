@@ -104,7 +104,7 @@ func (h *ConsoleHandler) Handle(ctx context.Context, r slog.Record) error {
 		if frame.File != "" {
 			buf.WriteString(frame.File)
 			buf.WriteRune(':')
-			buf.Write([]byte(strconv.Itoa(frame.Line)))
+			buf.WriteString(strconv.Itoa(frame.Line))
 			buf.WriteRune(' ')
 		}
 	}
