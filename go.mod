@@ -6,12 +6,12 @@ require (
 	github.com/caarlos0/env/v8 v8.0.0
 	github.com/georgysavva/scany/v2 v2.0.0
 	github.com/google/go-cmp v0.5.9
-	github.com/jackc/pgx/v5 v5.4.1
+	github.com/jackc/pgx/v5 v5.4.2
 	github.com/joho/godotenv v1.5.1
 	github.com/rubenv/sql-migrate v1.5.1
 	github.com/stretchr/testify v1.8.4
-	golang.org/x/exp v0.0.0-20230626212559-97b1e661b5df
-	modernc.org/sqlite v1.23.1
+	golang.org/x/exp v0.0.0-20230713183714-613f0c0eb8a1
+	modernc.org/sqlite v1.24.0
 )
 
 require (
@@ -26,7 +26,6 @@ require (
 	github.com/mattn/go-isatty v0.0.17 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
-	github.com/stretchr/objx v0.5.0 // indirect
 	golang.org/x/crypto v0.9.0 // indirect
 	golang.org/x/mod v0.11.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
