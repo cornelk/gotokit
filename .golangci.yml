@@ -4,6 +4,7 @@ run:
 linters:
   enable-all: true
   disable:
+    - contextcheck # check whether the function uses a non-inherited context
     - cyclop # checks function and package cyclomatic complexity
     - deadcode # deprecated
     - depguard # Go linter that checks if package imports are in a list of acceptable packages
@@ -38,6 +39,10 @@ linters:
     - wrapcheck # Checks that errors returned from external packages are wrapped
     - wsl # Whitespace Linter - Forces you to use empty lines
 
+linters-settings:
+  staticcheck:
+    # SA1012 do not pass a nil Context
+    checks: [ "all", "-SA1012" ]
 issues:
   exclude-use-default: false
   exclude-rules:

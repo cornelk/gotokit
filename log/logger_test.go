@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"strings"
 	"testing"
 
 	"github.com/cornelk/gotokit/env"
@@ -83,4 +84,25 @@ func TestLoggerTrace(t *testing.T) {
 	assert.False(t, exited)
 	output := buf.String()
 	assert.Equal(t, "TRACE   something happened\n", output)
+}
+
+func TestLoggerCaller(t *testing.T) {
+	cfg, err := ConfigForEnv(env.Development)
+	require.NoError(t, err)
+	var buf bytes.Buffer
+
+	cfg.CallerInfo = true
+	cfg.Level = TraceLevel
+	cfg.Output = &buf
+	cfg.TimeFormat = "-"
+
+	logger, err := NewWithConfig(cfg)
+	require.NoError(t, err)
+
+	logger.Trace("something happened")
+
+	output := buf.String()
+	assert.True(t, strings.Contains(output, "TRACE"))
+	assert.True(t, strings.Contains(output, "logger_test.go"))
+	assert.True(t, strings.Contains(output, "something happened\n"))
 }

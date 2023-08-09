@@ -1,7 +1,6 @@
 package log
 
 import (
-	"context"
 	"fmt"
 
 	"golang.org/x/exp/slog"
@@ -26,7 +25,7 @@ func (l *TemporalLogger) Debug(msg string, keyValues ...any) {
 	}
 
 	fields := keyValuesToFields(keyValues...)
-	l.logger.Log(context.TODO(), DebugLevel, msg, fields...)
+	l.logger.Log(nil, DebugLevel, msg, fields...)
 }
 
 // Info logs a message at InfoLevel.
@@ -36,7 +35,7 @@ func (l *TemporalLogger) Info(msg string, keyValues ...any) {
 	}
 
 	fields := keyValuesToFields(keyValues...)
-	l.logger.Log(context.TODO(), InfoLevel, msg, fields...)
+	l.logger.Log(nil, InfoLevel, msg, fields...)
 }
 
 // Warn logs a message at WarnLevel.
@@ -46,7 +45,7 @@ func (l *TemporalLogger) Warn(msg string, keyValues ...any) {
 	}
 
 	fields := keyValuesToFields(keyValues...)
-	l.logger.Log(context.TODO(), WarnLevel, msg, fields...)
+	l.logger.Log(nil, WarnLevel, msg, fields...)
 }
 
 // Error logs a message at ErrorLevel.
@@ -56,7 +55,7 @@ func (l *TemporalLogger) Error(msg string, keyValues ...any) {
 	}
 
 	fields := keyValuesToFields(keyValues...)
-	l.logger.Log(context.TODO(), ErrorLevel, msg, fields...)
+	l.logger.Log(nil, ErrorLevel, msg, fields...)
 }
 
 func keyValuesToFields(keyValues ...any) []any {
