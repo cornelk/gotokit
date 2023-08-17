@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"log/slog"
 
 	"github.com/stretchr/testify/require"
-	"golang.org/x/exp/slog"
 )
 
 // TestingT is a subset of the API provided by all *testing.T and

@@ -2,8 +2,7 @@ package log
 
 import (
 	"fmt"
-
-	"golang.org/x/exp/slog"
+	"log/slog"
 )
 
 // TemporalLogger implements a logger compatible with the temporal package.

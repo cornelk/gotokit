@@ -1,6 +1,6 @@
 module github.com/cornelk/gotokit
 
-go 1.20
+go 1.21
 
 require (
 	github.com/caarlos0/env/v8 v8.0.0
@@ -10,7 +10,6 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/rubenv/sql-migrate v1.5.2
 	github.com/stretchr/testify v1.8.4
-	golang.org/x/exp v0.0.0-20230807204917-050eac23e9de
 	modernc.org/sqlite v1.25.0
 )
 

@@ -3,9 +3,9 @@ package log
 import (
 	"fmt"
 	"io"
+	"log/slog"
 
 	"github.com/cornelk/gotokit/env"
-	"golang.org/x/exp/slog"
 )
 
 // DefaultTimeFormat is a slimmer default time format used if no other time format is specified.

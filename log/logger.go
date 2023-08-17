@@ -5,12 +5,12 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"log/slog"
 	"os"
 	"runtime"
 	"time"
 
 	"github.com/cornelk/gotokit/env"
-	"golang.org/x/exp/slog"
 )
 
 // Logger provides fast, leveled, structured logging. All methods are safe

@@ -2,10 +2,10 @@ package database
 
 import (
 	"context"
+	"log/slog"
 
 	"github.com/cornelk/gotokit/log"
 	"github.com/jackc/pgx/v5/tracelog"
-	"golang.org/x/exp/slog"
 )
 
 // Logger implements a database logger.
