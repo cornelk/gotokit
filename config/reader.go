@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/caarlos0/env/v8"
+	"github.com/caarlos0/env/v9"
 )
 
 // Read reads the environment variables for the given prefix and unmarshals it into the config object.
