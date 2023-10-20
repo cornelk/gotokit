@@ -23,6 +23,7 @@ type Config struct {
 	User     string `env:"USER"`
 	Password string `env:"PASSWORD"`
 	Database string `env:"DATABASE"`
+	Driver   string `env:"DRIVER"`
 
 	Logger LoggerContract
 }
