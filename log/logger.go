@@ -102,8 +102,10 @@ func (l *Logger) Named(name string) *Logger {
 func (l *Logger) With(fields ...any) *Logger {
 	newLogger := l.logger.With(fields...)
 	return &Logger{
-		logger: newLogger,
-		level:  l.level,
+		logger:     newLogger,
+		handler:    l.handler,
+		callerInfo: l.callerInfo,
+		level:      l.level,
 	}
 }
 
