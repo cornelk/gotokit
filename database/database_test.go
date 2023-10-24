@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestNew(t *testing.T) {
@@ -17,7 +18,7 @@ func TestNew(t *testing.T) {
 
 	ctx := context.Background()
 	db, err := New(ctx, cfg)
-	assert.Error(t, err)
+	require.Error(t, err)
 	assert.Nil(t, db)
 }
 
@@ -31,6 +32,6 @@ func TestNewStdlib(t *testing.T) {
 
 	ctx := context.Background()
 	db, err := NewStdlib(ctx, cfg)
-	assert.Error(t, err)
+	require.Error(t, err)
 	assert.Nil(t, db)
 }

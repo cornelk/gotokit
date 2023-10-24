@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"fmt"
 	"time"
 )
 
@@ -11,9 +12,12 @@ import (
 func Sleep(ctx context.Context, duration time.Duration) error {
 	select {
 	case <-ctx.Done():
-		return ctx.Err()
+		if err := ctx.Err(); err != nil {
+			return fmt.Errorf("context done: %w", err)
+		}
 
 	case <-time.After(duration):
-		return nil
 	}
+
+	return nil
 }

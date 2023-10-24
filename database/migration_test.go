@@ -18,7 +18,7 @@ func TestMigrate(t *testing.T) {
 	ctx := context.Background()
 	instruction := `INSERT INTO test(id) VALUES(1)`
 	_, err = db.ExecContext(ctx, instruction)
-	assert.Error(t, err)
+	require.Error(t, err)
 
 	var migrationFs = fstest.MapFS{
 		"1234567890_init.sql": {
@@ -42,7 +42,7 @@ DROP TABLE IF EXISTS test;
 	assert.Equal(t, 1, applied)
 
 	_, err = db.ExecContext(ctx, instruction)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	require.NoError(t, db.Close())
 
