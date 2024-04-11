@@ -3,14 +3,14 @@ module github.com/cornelk/gotokit
 go 1.21
 
 require (
-	github.com/caarlos0/env/v9 v9.0.0
-	github.com/georgysavva/scany/v2 v2.1.0
+	github.com/caarlos0/env/v10 v10.0.0
+	github.com/georgysavva/scany/v2 v2.1.3
 	github.com/google/go-cmp v0.6.0
 	github.com/jackc/pgx/v5 v5.5.5
 	github.com/joho/godotenv v1.5.1
 	github.com/rubenv/sql-migrate v1.6.1
 	github.com/stretchr/testify v1.9.0
-	modernc.org/sqlite v1.29.5
+	modernc.org/sqlite v1.29.6
 )
 
 require (

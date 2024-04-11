@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/caarlos0/env/v9"
+	"github.com/caarlos0/env/v10"
 )
 
 // Read reads the environment variables for the given prefix and unmarshals it into the config object.
@@ -13,8 +13,8 @@ import (
 // with an empty first prefix and a second set prefix. Only environment variables that exist will
 // set a field in the config. This way, an environment variable set without a prefix can be overwritten
 // by an environment variable with a prefix.
-func Read(config any, prefixes ...string) error {
-	for _, prefix := range prefixes {
+func Read(config any, opts Options) error {
+	for _, prefix := range opts.Prefixes {
 		if prefix != "" {
 			if !strings.HasSuffix(prefix, "_") {
 				prefix += "_"
@@ -22,8 +22,11 @@ func Read(config any, prefixes ...string) error {
 			prefix = strings.ToUpper(prefix)
 		}
 
-		opts := env.Options{Prefix: prefix}
-		if err := env.ParseWithOptions(config, opts); err != nil {
+		envOpts := env.Options{
+			Prefix:  prefix,
+			FuncMap: opts.FuncMap,
+		}
+		if err := env.ParseWithOptions(config, envOpts); err != nil {
 			return fmt.Errorf("reading config from env: %w", err)
 		}
 	}
