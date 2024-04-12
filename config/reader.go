@@ -14,6 +14,11 @@ import (
 // set a field in the config. This way, an environment variable set without a prefix can be overwritten
 // by an environment variable with a prefix.
 func Read(config any, opts Options) error {
+	// fall back to a default prefix if none are provided
+	if len(opts.Prefixes) == 0 {
+		opts.Prefixes = []string{""}
+	}
+
 	for _, prefix := range opts.Prefixes {
 		if prefix != "" {
 			if !strings.HasSuffix(prefix, "_") {
