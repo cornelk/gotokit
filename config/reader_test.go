@@ -4,7 +4,6 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/caarlos0/env/v10"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -58,8 +57,7 @@ func TestReaderFuncMap(t *testing.T) {
 
 	var cfg myConfig
 	opts := Options{
-		Prefixes: []string{""},
-		FuncMap: map[reflect.Type]env.ParserFunc{
+		FuncMap: map[reflect.Type]ParserFunc{
 			reflect.TypeOf(foo{}): fooFunc,
 		},
 	}
