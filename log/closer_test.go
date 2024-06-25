@@ -2,6 +2,7 @@ package log
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"strings"
 	"testing"
@@ -19,7 +20,7 @@ func (t testCloser) Close() error {
 	return t.err
 }
 
-func TestLoggerCloserLogOnError(t *testing.T) {
+func TestLoggerCloser(t *testing.T) {
 	cfg, err := ConfigForEnv(env.Development)
 	require.NoError(t, err)
 	var buf bytes.Buffer
@@ -32,14 +33,50 @@ func TestLoggerCloserLogOnError(t *testing.T) {
 	closer := testCloser{}
 	msg := "closing failed"
 
-	logger.CloserLogOnError(closer, msg)
+	logger.Closer(closer, msg)
 	output := buf.String()
 	assert.False(t, strings.Contains(output, "ERROR"))
 	assert.False(t, strings.Contains(output, msg))
 
 	errMsg := "failure"
 	closer.err = errors.New(errMsg)
-	logger.CloserLogOnError(closer, msg)
+	logger.Closer(closer, msg)
+	output = buf.String()
+	assert.True(t, strings.Contains(output, "ERROR"))
+	assert.True(t, strings.Contains(output, msg))
+	assert.True(t, strings.Contains(output, errMsg))
+}
+
+type testCloserCtx struct {
+	err error
+}
+
+func (t testCloserCtx) Close(context.Context) error {
+	return t.err
+}
+
+func TestLoggerCloserCtx(t *testing.T) {
+	cfg, err := ConfigForEnv(env.Development)
+	require.NoError(t, err)
+	var buf bytes.Buffer
+	cfg.Output = &buf
+	cfg.TimeFormat = "-"
+
+	logger, err := NewWithConfig(cfg)
+	require.NoError(t, err)
+
+	ctx := context.Background()
+	closer := testCloserCtx{}
+	msg := "closing failed"
+
+	logger.CloserCtx(ctx, closer, msg)
+	output := buf.String()
+	assert.False(t, strings.Contains(output, "ERROR"))
+	assert.False(t, strings.Contains(output, msg))
+
+	errMsg := "failure"
+	closer.err = errors.New(errMsg)
+	logger.CloserCtx(ctx, closer, msg)
 	output = buf.String()
 	assert.True(t, strings.Contains(output, "ERROR"))
 	assert.True(t, strings.Contains(output, msg))
