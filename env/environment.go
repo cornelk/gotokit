@@ -2,6 +2,7 @@
 package env
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 )
@@ -18,6 +19,10 @@ const (
 	Staging     Environment = "staging"
 	Production  Environment = "prod"
 )
+
+// ErrNotAllowed describes an error for action
+// which is not allowed in a given environment.
+var ErrNotAllowed = errors.New("action not allowed for the environment")
 
 // Parse returns an environment constant from a given string representation of it.
 func Parse(envName string) (Environment, error) {
