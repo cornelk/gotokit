@@ -3,7 +3,7 @@ package config
 import (
 	"reflect"
 
-	"github.com/caarlos0/env/v10"
+	"github.com/caarlos0/env/v11"
 )
 
 // ParserFunc defines the signature of a function that can be used within `CustomParsers`.

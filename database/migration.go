@@ -26,12 +26,12 @@ func Migrate(db *sql.DB, migrations fs.FS, direction MigrationDirection) (int, e
 
 // MigrateMax migrates the given database with the embedded migrations and direction,
 // will apply at most `max` migrations, pass 0 for no limit.
-func MigrateMax(db *sql.DB, migrations fs.FS, direction MigrationDirection, max int) (int, error) {
+func MigrateMax(db *sql.DB, migrations fs.FS, direction MigrationDirection, maxAmount int) (int, error) {
 	source := &migrate.HttpFileSystemMigrationSource{
 		FileSystem: http.FS(migrations),
 	}
 
-	applied, err := migrate.ExecMax(db, "postgres", source, direction, max)
+	applied, err := migrate.ExecMax(db, "postgres", source, direction, maxAmount)
 	if err != nil {
 		return 0, fmt.Errorf("executing migrations: %w", err)
 	}
