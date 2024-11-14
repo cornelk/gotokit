@@ -4,6 +4,7 @@ package database
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 	"net"
 
@@ -42,8 +43,14 @@ type (
 	Rows = pgx.Rows
 )
 
-// ErrNoRows occurs when rows are expected but none are returned.
-var ErrNoRows = pgx.ErrNoRows
+var (
+	// ErrNoRows occurs when rows are expected but none are returned.
+	ErrNoRows = pgx.ErrNoRows
+	// ErrRowAlreadyExists occurs when a row already exists when trying to insert.
+	ErrRowAlreadyExists = errors.New("row already exists")
+	// ErrTooManyRows occurs when more rows than expected are returned.
+	ErrTooManyRows = pgx.ErrTooManyRows
+)
 
 // New establishes a connection with a PostgreSQL database.
 func New(ctx context.Context, cfg Config) (*Connection, error) {
