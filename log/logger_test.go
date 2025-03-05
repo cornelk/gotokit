@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"errors"
-	"strings"
 	"testing"
 
 	"github.com/cornelk/gotokit/env"
@@ -102,7 +101,7 @@ func TestLoggerCaller(t *testing.T) {
 	logger.Trace("something happened")
 
 	output := buf.String()
-	assert.True(t, strings.Contains(output, "TRACE"))
-	assert.True(t, strings.Contains(output, "logger_test.go"))
-	assert.True(t, strings.Contains(output, "something happened\n"))
+	assert.Contains(t, output, "TRACE")
+	assert.Contains(t, output, "logger_test.go")
+	assert.Contains(t, output, "something happened\n")
 }

@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"errors"
-	"strings"
 	"testing"
 
 	"github.com/cornelk/gotokit/env"
@@ -35,16 +34,16 @@ func TestLoggerCloser(t *testing.T) {
 
 	logger.Closer(closer, msg)
 	output := buf.String()
-	assert.False(t, strings.Contains(output, "ERROR"))
-	assert.False(t, strings.Contains(output, msg))
+	assert.NotContains(t, output, "ERROR")
+	assert.NotContains(t, output, msg)
 
 	errMsg := "failure"
 	closer.err = errors.New(errMsg)
 	logger.Closer(closer, msg)
 	output = buf.String()
-	assert.True(t, strings.Contains(output, "ERROR"))
-	assert.True(t, strings.Contains(output, msg))
-	assert.True(t, strings.Contains(output, errMsg))
+	assert.Contains(t, output, "ERROR")
+	assert.Contains(t, output, msg)
+	assert.Contains(t, output, errMsg)
 }
 
 type testCloserCtx struct {
@@ -71,14 +70,14 @@ func TestLoggerCloserCtx(t *testing.T) {
 
 	logger.CloserCtx(ctx, closer, msg)
 	output := buf.String()
-	assert.False(t, strings.Contains(output, "ERROR"))
-	assert.False(t, strings.Contains(output, msg))
+	assert.NotContains(t, output, "ERROR")
+	assert.NotContains(t, output, msg)
 
 	errMsg := "failure"
 	closer.err = errors.New(errMsg)
 	logger.CloserCtx(ctx, closer, msg)
 	output = buf.String()
-	assert.True(t, strings.Contains(output, "ERROR"))
-	assert.True(t, strings.Contains(output, msg))
-	assert.True(t, strings.Contains(output, errMsg))
+	assert.Contains(t, output, "ERROR")
+	assert.Contains(t, output, msg)
+	assert.Contains(t, output, errMsg)
 }
