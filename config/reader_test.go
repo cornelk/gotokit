@@ -49,7 +49,7 @@ func TestReaderFuncMap(t *testing.T) {
 	}
 
 	var called int
-	fooFunc := func(v string) (interface{}, error) {
+	fooFunc := func(v string) (any, error) {
 		assert.Equal(t, "admin", v)
 		called++
 		return foo{name: v}, nil

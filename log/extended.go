@@ -17,7 +17,7 @@ func NewExtendedLogger(logger *Logger) *ExtendedLogger {
 }
 
 // Debugf logs a message at DebugLevel.
-func (l *ExtendedLogger) Debugf(format string, v ...interface{}) {
+func (l *ExtendedLogger) Debugf(format string, v ...any) {
 	if l.logger.Level() > DebugLevel {
 		return
 	}
@@ -27,7 +27,7 @@ func (l *ExtendedLogger) Debugf(format string, v ...interface{}) {
 }
 
 // Warnf logs a message at WarnLevel.
-func (l *ExtendedLogger) Warnf(format string, v ...interface{}) {
+func (l *ExtendedLogger) Warnf(format string, v ...any) {
 	if l.logger.Level() > WarnLevel {
 		return
 	}
@@ -37,7 +37,7 @@ func (l *ExtendedLogger) Warnf(format string, v ...interface{}) {
 }
 
 // Errorf logs a message at ErrorLevel.
-func (l *ExtendedLogger) Errorf(format string, v ...interface{}) {
+func (l *ExtendedLogger) Errorf(format string, v ...any) {
 	if l.logger.Level() > ErrorLevel {
 		return
 	}
