@@ -1,4 +1,4 @@
-GOLANGCI_VERSION = v1.64.6
+GOLANGCI_VERSION = v2.1.6
 
 help: ## show help, shown by default if no target is specified
 	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -17,4 +17,4 @@ test-coverage-web: test-coverage ## run unit tests and show test coverage in bro
 	go tool cover -html=.testCoverage
 
 install-linters: ## install the linter
-	go install github.com/golangci/golangci-lint/cmd/golangci-lint@${GOLANGCI_VERSION}
+	go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@${GOLANGCI_VERSION}
