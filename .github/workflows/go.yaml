@@ -5,17 +5,22 @@ on:
     branches:
       - main
   pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
 
 jobs:
   build:
-    if: "!contains(github.event.commits[0].message, '[skip ci]')"
+    if: ${{ github.event_name == 'push' || !github.event.pull_request.draft || !contains(github.event.commits[0].message, '[skip ci]') }}
     timeout-minutes: 15
 
     name: Build
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go: ['1.21']
+        go: ['1.23']
 
     steps:
       - name: Set up Go 1.x
