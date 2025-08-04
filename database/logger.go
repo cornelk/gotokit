@@ -26,7 +26,7 @@ func (l *Logger) Log(ctx context.Context, level tracelog.LogLevel, msg string, d
 		return
 	}
 
-	fields := make([]any, 0, len(data))
+	fields := make([]log.Field, 0, len(data))
 	for k, v := range data {
 		fields = append(fields, slog.Any(k, v))
 	}

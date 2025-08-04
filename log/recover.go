@@ -9,7 +9,7 @@ func RecoverPanics() {
 	if r := recover(); r != nil {
 		logger := Must(New())
 		if err, ok := r.(error); ok {
-			logger.Fatal("Panic", err)
+			logger.Fatal("Panic", Err(err))
 		} else {
 			logger.Fatal("Panic", String("info", fmt.Sprintf("%+v", r)))
 		}

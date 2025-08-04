@@ -57,9 +57,9 @@ func (l *TemporalLogger) Error(msg string, keyValues ...any) {
 	l.logger.Log(nil, ErrorLevel, msg, fields...)
 }
 
-func keyValuesToFields(keyValues ...any) []any {
+func keyValuesToFields(keyValues ...any) []Field {
 	l := len(keyValues)
-	fields := make([]any, 0, (len(keyValues)/2)+1)
+	fields := make([]Field, 0, (len(keyValues)/2)+1)
 
 	for i := 0; i < l; i++ {
 		k := keyValues[i]
