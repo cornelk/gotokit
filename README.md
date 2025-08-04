@@ -16,3 +16,4 @@
     ├─ jsonutils        additional helpers for JSON processing 
     ├─ log              fast and structured logging based on slog
     ├─ pointer          create a pointer to a value
+    ├─ set              generic set data structure with set operations
