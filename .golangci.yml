@@ -57,6 +57,8 @@ linters:
     - whitespace # detects leading and trailing whitespace
     - wrapcheck # Checks that errors returned from external packages are wrapped
   settings:
+    cyclop:
+        max-complexity: 13 # minimum cyclomatic complexity to report
     staticcheck:
       checks:
         - all
