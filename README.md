@@ -13,6 +13,7 @@
     ├─ database         PostgreSQL client and struct scanner
     ├─ env              test/dev/staging/prod environment defines
     ├─ envfile          loads environment variables from env files
+    ├─ httpclient       HTTP client utilities and proxy configuration
     ├─ jsonutils        additional helpers for JSON processing 
     ├─ log              fast and structured logging based on slog
     ├─ pointer          create a pointer to a value
