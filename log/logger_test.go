@@ -105,3 +105,14 @@ func TestLoggerCaller(t *testing.T) {
 	assert.Contains(t, output, "logger_test.go")
 	assert.Contains(t, output, "something happened\n")
 }
+
+func TestLoggerSlog(t *testing.T) {
+	cfg, err := ConfigForEnv(env.Development)
+	require.NoError(t, err)
+
+	logger, err := NewWithConfig(cfg)
+	require.NoError(t, err)
+
+	slogger := logger.Slog()
+	assert.NotNil(t, slogger)
+}

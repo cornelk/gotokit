@@ -140,6 +140,12 @@ func (l *Logger) SetLevel(level Level) {
 	l.level.Set(level)
 }
 
+// Slog returns the underlying *slog.Logger instance.
+// This is useful for integrating with third-party libraries that expect a standard slog logger.
+func (l *Logger) Slog() *slog.Logger {
+	return l.logger
+}
+
 // Trace logs at TraceLevel.
 func (l *Logger) Trace(msg string, args ...Field) {
 	// Early exit if logger nil or level too high
